@@ -108,9 +108,9 @@ export default function IntentionalFatherhoodApp() {
         setCompletedTasks((prev) => [
           ...completedInReservoir.map((item) => ({
             ...item,
-            completed: true,
+            completed: true as true,
             completedDate: item.completedDate || new Date().toISOString(),
-          })),
+          } as CompletedTask)),
           ...prev,
         ]);
         setReservoir((prev) => prev.filter((item) => !item.completed));
@@ -639,12 +639,12 @@ export default function IntentionalFatherhoodApp() {
               });
 
               setCompletedTasks((prev) => [
-                {
+                ({
                   ...item,
                   id: itemId,
-                  completed: true,
+                  completed: true as true,
                   completedDate: new Date().toISOString(),
-                },
+                } as CompletedTask),
                 ...prev,
               ]);
 
