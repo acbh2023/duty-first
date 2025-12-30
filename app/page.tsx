@@ -157,10 +157,14 @@ export default function IntentionalFatherhoodApp() {
 
     setCompletedTasks((prev) => [completedTask, ...prev]);
 
-    setActiveMission((prev) => ({
-      ...prev,
-      tasks: prev!.tasks.map((t, i) => (i === taskIndex ? completedTask : t)),
-    }));
+    setActiveMission((prev) =>
+      prev
+        ? {
+            ...prev,
+            tasks: prev.tasks.map((t, i) => (i === taskIndex ? completedTask : t)),
+          }
+        : prev
+    );
 
     if (completedTask.id) {
       setReservoir((prev) => prev.filter((r) => r.id !== completedTask.id));
@@ -181,10 +185,14 @@ export default function IntentionalFatherhoodApp() {
 
     const updatedTask = { ...taskToUncheck, completed: false, completedDate: undefined };
 
-    setActiveMission((prev) => ({
-      ...prev,
-      tasks: prev!.tasks.map((t, i) => (i === taskIndex ? updatedTask : t)),
-    }));
+    setActiveMission((prev) =>
+      prev
+        ? {
+            ...prev,
+            tasks: prev.tasks.map((t, i) => (i === taskIndex ? updatedTask : t)),
+          }
+        : prev
+    );
 
     setCompletedTasks((prev) =>
       prev.filter((ct) => {
