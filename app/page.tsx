@@ -519,7 +519,7 @@ export default function IntentionalFatherhoodApp() {
               <Users className="text-orange-500 mx-auto mb-4" size={56} />
               <h1 className="text-3xl font-black tracking-tight text-white uppercase italic">The Wingman</h1>
               <p className="text-slate-400 text-sm leading-relaxed px-4">
-                You weren't meant to do this alone.
+                You weren't meant to do this alone.  Identify one man who will hold you to your mission.
               </p>
             </div>
 
@@ -559,7 +559,7 @@ export default function IntentionalFatherhoodApp() {
               <Target className="text-orange-500 mx-auto mb-4" size={56} />
               <h1 className="text-3xl font-black tracking-tight text-white uppercase italic">Your Lifesong</h1>
               <p className="text-slate-400 text-sm leading-relaxed px-4">
-                Define your North Star.
+                Define your North Star. This phrase will be anchored at the top of your dashboard.
               </p>
             </div>
 
@@ -570,7 +570,7 @@ export default function IntentionalFatherhoodApp() {
                 </label>
                 <textarea
                   className="w-full bg-black border border-slate-700 p-4 rounded-lg text-sm text-white leading-relaxed resize-none"
-                  placeholder="What is a summary of your life's purpose?"
+                  placeholder="What is a summary of your life's purpose? What keeps you going? What is your life's heartbeat?"
                   value={lifesong.full}
                   onChange={(e) => setLifesong({ ...lifesong, full: e.target.value })}
                   rows={4}
