@@ -475,7 +475,7 @@ export default function IntentionalFatherhoodApp() {
               <Carrot className="text-orange-500 mx-auto mb-4" size={56} />
               <h1 className="text-3xl font-black tracking-tight text-white uppercase italic">Encouragement</h1>
               <p className="text-slate-400 text-sm leading-relaxed px-4">
-                Set a message that appears when you complete tasks.
+                Set a message that appears when you complete tasks. You can add more messages in settings later.
               </p>
             </div>
 
@@ -486,7 +486,7 @@ export default function IntentionalFatherhoodApp() {
                 </label>
                 <textarea
                   className="w-full bg-black border border-slate-700 p-4 rounded-lg text-sm text-white leading-relaxed resize-none"
-                  placeholder="e.g., Ecclesiastes 2:24..."
+                  placeholder="e.g., Ecclesiastes 2:24 - There is nothing better for a person than that he should eat and drink and find enjoyment in his toil. This also, I saw, is from the hand of God."
                   value={tempEncouragingMessage}
                   onChange={(e) => setTempEncouragingMessage(e.target.value)}
                   rows={4}
