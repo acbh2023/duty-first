@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, AlertCircle, BookOpen, Calendar, Info } from "lucide-react";
+import { ArrowRight, AlertCircle, BookOpen, Calendar, Info, Users } from "lucide-react";
 import { Task, ReservoirItem } from "@/app/types";
 
 interface SundayWizardProps {
@@ -64,7 +64,7 @@ export function SundayWizard({
       <div className="w-full bg-slate-900 h-1 rounded-full overflow-hidden">
         <div
           className="bg-orange-600 h-full transition-all duration-500"
-          style={{ width: `${(wizardStep / 3) * 100}%` }}
+          style={{ width: `${(wizardStep / 4) * 100}%` }}
         ></div>
       </div>
 
@@ -318,10 +318,103 @@ export function SundayWizard({
               Back
             </button>
             <button
-              onClick={onCompleteWizard}
+              onClick={() => onStepChange(4)}
               className="flex-1 bg-orange-600 text-white font-black py-4 rounded-xl uppercase tracking-widest text-sm"
             >
               Commit Mission
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Wizard Step 4: Share & Accountability */}
+      {wizardStep === 4 && (
+        <div className="space-y-6 py-6 animate-in zoom-in-95">
+          <div className="flex justify-center mb-6">
+            <div className="inline-block p-6 bg-orange-600/10 border-2 border-orange-500 rounded-full">
+              <Users className="text-orange-500" size={56} />
+            </div>
+          </div>
+
+          <h3 className="text-2xl font-black uppercase italic text-center text-white">Share Your Mission</h3>
+
+          <div className="bg-slate-900/80 border border-slate-800 p-6 rounded-2xl space-y-6">
+            <div className="space-y-3">
+              <p className="text-sm text-slate-300 leading-relaxed">
+                <strong className="text-orange-500">Accountability is power.</strong> Text your wingman your mission this week so they can check in on your progress.
+              </p>
+
+              {/* Mission Summary Box */}
+              <div className="bg-black/60 border-2 border-orange-500/50 p-5 rounded-xl space-y-3">
+                <p className="text-xs uppercase font-black text-orange-500 tracking-wide mb-2">This Week's Mission:</p>
+                
+                <div className="space-y-2">
+                  <div className="text-xs text-slate-400 mb-3">
+                    <strong className="text-slate-300">Vision Alignment:</strong>
+                    <p className="italic mt-1 text-slate-300">{tempSuccess}</p>
+                  </div>
+
+                  <div>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wide mb-2">Tasks:</p>
+                    <div className="space-y-2">
+                      {tempSelection.map((task, i) => (
+                        <div key={task.id || i} className="flex items-start gap-2 text-xs">
+                          <span className="text-orange-500 font-bold">•</span>
+                          <span className="text-slate-300">{task.text} <span className="text-slate-500">({task.pillar})</span></span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => {
+                    const missionText = `This Week's Mission:\n\nVision: ${tempSuccess}\n\nTasks:\n${tempSelection.map((t) => `• ${t.text} (${t.pillar})`).join("\n")}`;
+                    navigator.clipboard.writeText(missionText);
+                    alert("Mission copied to clipboard! Ready to text your wingman.");
+                  }}
+                  className="w-full mt-4 bg-orange-600 text-white font-bold py-3 rounded-lg text-xs uppercase tracking-wider hover:bg-orange-500 transition-colors"
+                >
+                  Copy Mission to Clipboard
+                </button>
+              </div>
+            </div>
+
+            {/* Discipleship Reminder */}
+            <div className="border-t border-slate-800 pt-6 space-y-4">
+              <div className="flex items-start gap-3">
+                <BookOpen className="text-orange-500 shrink-0 mt-0.5" size={24} />
+                <div className="space-y-2">
+                  <p className="text-white font-bold text-sm">Schedule Discipleship Time</p>
+                  <p className="text-slate-300 text-xs leading-relaxed">
+                    Beyond just accountability texts, schedule dedicated in-person or phone time with your wingman for:
+                  </p>
+                  <ul className="text-xs text-slate-300 leading-relaxed space-y-1 ml-4 mt-2">
+                    <li>• <strong className="text-orange-400">Bible Study</strong> - Study scripture together</li>
+                    <li>• <strong className="text-orange-400">Goal Review</strong> - Reflect on mission progress and adjustments</li>
+                    <li>• <strong className="text-orange-400">Spiritual Discipleship</strong> - Pray, encourage, challenge each other</li>
+                  </ul>
+                  <p className="text-slate-400 text-xs italic mt-3">
+                    Put this time on both calendars now. Make it recurring and non-negotiable. This is where real transformation happens.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Navigation buttons */}
+          <div className="flex gap-3 pt-4">
+            <button
+              onClick={() => onStepChange(3)}
+              className="flex-1 border border-slate-800 text-slate-500 font-bold py-4 rounded-xl uppercase tracking-widest text-sm"
+            >
+              Back
+            </button>
+            <button
+              onClick={onCompleteWizard}
+              className="flex-1 bg-orange-600 text-white font-black py-4 rounded-xl uppercase tracking-widest text-sm"
+            >
+              Finish & Go to Dashboard
             </button>
           </div>
         </div>
