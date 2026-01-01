@@ -40,6 +40,8 @@ export function SundayWizard({
   getStaleTasks,
 }: SundayWizardProps) {
   const staleTasks = getStaleTasks();
+  // Ensure selection checks are based on IDs (not object identity) to avoid stale references
+  const hasSelection = tempSelection.some((s) => reservoir.some((r) => r.id === s.id));
 
   const FAQ = ({ title, text }: { title: string; text: string }) => (
     <button
@@ -74,7 +76,7 @@ export function SundayWizard({
           <p className="text-sm font-bold text-orange-500 uppercase tracking-widest">Step 1: Alignment</p>
           <h3 className="text-xl font-black italic">Which tasks align with your Lifesong this week?</h3>
           <p className="text-sm text-slate-400 leading-relaxed px-2">
-            Choose at least one Private (Soul) and one Creative (Family) task. You can also add new tasks below.
+            Add a task and select it's category. Private is related to relationship with God (bible study, prayer, obedience, confession, discipleship, etc.) Creative is any fun project for you, wife, kids, etc. (art, music, business idea, etc.) Log is short for Home Logisitical (install washer/dryer, fix sink, hang up pictures, etc.) Dreams is anything really long-term (i.e. turn our house into a hub for prayer and bible study for locals, foreigners and the poor) You can either select from Reservoir tasks and add new ones. Must add one task to proceed.
           </p>
 
           {/* Quick Add New Task Form */}
@@ -156,44 +158,47 @@ export function SundayWizard({
 
           {/* List of all reservoir tasks for selection */}
           <div className="space-y-2">
-            {reservoir.map((item, i) => (
-              <button
-                key={item.id || i}
-                onClick={() =>
-                  tempSelection.includes(item)
-                    ? onSelectionChange(tempSelection.filter((s) => s !== item))
-                    : onSelectionChange([...tempSelection, item])
-                }
-                className={`w-full text-left p-4 rounded-xl border transition ${
-                  tempSelection.includes(item)
-                    ? "bg-orange-600/10 border-orange-600"
-                    : "bg-slate-900 border-slate-800"
-                }`}
-              >
-                <div className="flex justify-between items-center mb-1">
-                  <p
-                    className={`text-[8px] uppercase font-bold ${
-                      tempSelection.includes(item) ? "text-orange-500" : "text-slate-500"
-                    }`}
-                  >
-                    {item.pillar}
-                  </p>
-                  <p className="text-[8px] font-bold text-slate-600 uppercase">
-                    {item.createdAt ? new Date(item.createdAt).toLocaleDateString() : ""}
-                  </p>
-                </div>
-                <p className="text-sm font-bold break-words">{item.text}</p>
-              </button>
-            ))}
+            {reservoir.map((item, i) => {
+              const selected = tempSelection.some((s) => s.id === item.id);
+              return (
+                <button
+                  key={item.id || i}
+                  onClick={() => {
+                    if (selected) {
+                      onSelectionChange(tempSelection.filter((s) => s.id !== item.id));
+                    } else {
+                      onSelectionChange([...tempSelection, item]);
+                    }
+                  }}
+                  className={`w-full text-left p-4 rounded-xl border transition ${
+                    selected ? "bg-orange-600/10 border-orange-600" : "bg-slate-900 border-slate-800"
+                  }`}
+                >
+                  <div className="flex justify-between items-center mb-1">
+                    <p className={`text-[8px] uppercase font-bold ${selected ? "text-orange-500" : "text-slate-500"}`}>
+                      {item.pillar}
+                    </p>
+                    <p className="text-[8px] font-bold text-slate-600 uppercase">
+                      {item.createdAt ? new Date(item.createdAt).toLocaleDateString() : ""}
+                    </p>
+                  </div>
+                  <p className="text-sm font-bold break-words">{item.text}</p>
+                </button>
+              );
+            })}
           </div>
 
           {/* Continue button */}
           <button
-            disabled={staleTasks.length > 0}
+            disabled={staleTasks.length > 0 || !hasSelection}
             onClick={() => onStepChange(2)}
             className="w-full bg-orange-600 text-white font-black py-4 rounded-xl uppercase tracking-widest text-sm disabled:opacity-30 disabled:cursor-not-allowed"
           >
-            {staleTasks.length > 0 ? "Resolve Stale Tasks to Proceed" : "Continue to Mission Selection"}
+            {staleTasks.length > 0
+              ? "Resolve Stale Tasks to Proceed"
+              : !hasSelection
+              ? "Select at least one task to proceed"
+              : "Continue to Mission Selection"}
           </button>
         </div>
       )}
