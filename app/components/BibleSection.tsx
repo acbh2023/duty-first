@@ -99,7 +99,7 @@ export function BibleSection({ bibleTakeaways, onAddNote, onDeleteNote }: BibleS
           onClick={addBibleNote}
           className="w-full bg-white text-black font-black py-4 rounded-xl uppercase text-xs tracking-[0.2em] hover:bg-orange-500 hover:text-white transition-all shadow-lg mt-4"
         >
-          Lock in Takeaway
+          ADD
         </button>
       </div>
 
