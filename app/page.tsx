@@ -220,6 +220,13 @@ export default function IntentionalFatherhoodApp() {
   };
 
   const handleCompleteWizard = () => {
+    // If this is called before the Share step (step 4), advance to step 4 instead
+    if (wizardStep !== 4) {
+      setWizardStep(4);
+      return;
+    }
+
+    // Finalize the mission and navigate to dashboard when called from the final step
     setActiveMission({ tasks: tempSelection, date: tempDate, visionAlignment: tempSuccess });
     setView("dashboard");
     setWizardStep(1);

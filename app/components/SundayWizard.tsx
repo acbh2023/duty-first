@@ -346,7 +346,7 @@ export function SundayWizard({
           <div className="bg-slate-900/80 border border-slate-800 p-6 rounded-2xl space-y-6">
             <div className="space-y-3">
               <p className="text-sm text-slate-300 leading-relaxed">
-                <strong className="text-orange-500">Accountability is power.</strong> Text your wingman your mission this week so they can check in on your progress.
+                <strong className="text-orange-500">Accountability is necessary; we are to carry each others' burdens.</strong> Text your wingman by pressing the copy button below and pasting in a text.
               </p>
 
               {/* Mission Summary Box */}
